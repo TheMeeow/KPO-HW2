@@ -24,29 +24,18 @@ class OrderRepository {
         order.status = OrderStatus.READY
     }
 
-    fun cancelOrder(username: String, orderId: Int) : List<Dish> {
-        val order = checkUserAccessToOrder(username, orderId)
+    fun cancelOrder(order: Order) : List<Dish> {
         orders.remove(order)
         return order.listOfDishes
     }
 
-    fun addDishToOrder(username: String, orderId: Int, dish: Dish) {
-        val order = checkUserAccessToOrder(username, orderId)
+    fun addDishToOrder(order: Order, dish: Dish) {
         order.addDish(dish)
     }
 
-    fun payForOrder(username: String, orderId: Int) : Int {
-        val order = checkUserAccessToOrder(username, orderId)
+    fun payForOrder(order: Order) : Int {
         order.status = OrderStatus.PAID
         return order.getTotalCost()
-    }
-
-     fun checkUserAccessToOrder(username: String, orderId: Int) : Order {
-        val order = getOrderIfExists(orderId)
-        if(username != order.ownerUsername) {
-            throw AccessDeniedException("You have no access to someone else's order!")
-        }
-        return order
     }
 
     private fun getOrderIfExists(orderId: Int) : Order {
@@ -59,6 +48,14 @@ class OrderRepository {
             return 0
         }
         return (orders.maxOf { it.id } + 1)
+    }
+
+    fun checkUserAccessToOrder(username: String, orderId: Int): Order {
+        val order = getOrderIfExists(orderId)
+        if (username != order.ownerUsername) {
+            throw AccessDeniedException("You have no access to someone else's order!")
+        }
+        return order
     }
 
     override fun toString(): String {

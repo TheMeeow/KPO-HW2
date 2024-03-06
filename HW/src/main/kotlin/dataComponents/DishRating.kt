@@ -1,5 +1,8 @@
 package dataComponents
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class DishRating {
     private val listOfReviews : MutableList<String> = mutableListOf()
     var rating: Double = 0.0

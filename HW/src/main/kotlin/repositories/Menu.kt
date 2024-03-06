@@ -1,9 +1,10 @@
 package repositories
 
 import dataComponents.Dish
+import dataComponents.FuckingSerializer
 import java.lang.Exception
 
-class Menu(private var listOfDishes: MutableMap<Dish, Int> = mutableMapOf()) {
+class Menu(private var listOfDishes: MutableMap<Dish, Int> = mutableMapOf(), private val serializer: FuckingSerializer) {
     fun addDish(dish: Dish, countOfDishes: Int) {
         if (countOfDishes < 0) {
             throw IllegalArgumentException("Count of dishes can't be negative!")
@@ -14,15 +15,14 @@ class Menu(private var listOfDishes: MutableMap<Dish, Int> = mutableMapOf()) {
         listOfDishes[dish] = countOfDishes
     }
 
-    fun deleteDish(dishName: String) {
-        listOfDishes.remove(getDishByName(dishName))
+    fun deleteDish(dish: Dish) {
+        listOfDishes.remove(dish)
     }
 
-    fun orderDish(dishName: String): Dish {
-        val dish = getDishByName(dishName)
+    fun orderDish(dish: Dish): Dish {
         val countOfDishes = listOfDishes[dish]!!
         if (countOfDishes < 1) {
-            throw NoSuchElementException("No dishes \"$dishName\" left!")
+            throw NoSuchElementException("No dishes \"${dish.name}\" left!")
         }
         listOfDishes[dish] = countOfDishes - 1
         return dish
@@ -37,8 +37,7 @@ class Menu(private var listOfDishes: MutableMap<Dish, Int> = mutableMapOf()) {
         }
     }
 
-    fun changeDishCount(dishName: String, countOfDishes: Int) {
-        val dish = getDishByName(dishName)
+    fun changeDishCount(dish: Dish, countOfDishes: Int) {
         if (countOfDishes < 0) {
             throw IllegalArgumentException("Count of dishes can't be negative!")
         }
@@ -60,9 +59,24 @@ class Menu(private var listOfDishes: MutableMap<Dish, Int> = mutableMapOf()) {
         return sum / listOfDishes.keys.size
     }
 
-    fun getAllReviews(dishName: String) : List<String> {
-        val dish = getDishByName(dishName)
+    fun getAllReviews(dish: Dish) : List<String> {
         return dish.rating.getReviews()
+    }
+
+    fun serialiseMenu() {
+        val dishes = listOfDishes.keys
+        val countsOfDishes = listOfDishes.values
+
+
+        serializer.serializeListToFile(dishes.toList(), "notFuckingDishes.json")
+        serializer.serializeListToFile(countsOfDishes.toList(), "countsOfDishes.json")
+    }
+
+    fun deserializeMenu() {
+        val dishes = serializer.deserializeListFromFile<Dish>("notFuckingDishes.json")
+        val countOfDishes = serializer.deserializeListFromFile<Int>("countsOfDishes.json")
+
+        listOfDishes = dishes.zip(countOfDishes).toMap().toMutableMap()
     }
 
     override fun toString(): String {

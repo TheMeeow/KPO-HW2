@@ -4,7 +4,7 @@ class Order(val id: Int, val ownerUsername: String, val listOfDishes: MutableLis
     fun getTotalCost(): Int {
         var sum = 0
         for (dish in listOfDishes) {
-            sum += dish.getPrice()
+            sum += dish.getPriceT()
         }
         return sum
     }

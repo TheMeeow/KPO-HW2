@@ -1,6 +1,8 @@
 package repositories
 
 import dataComponents.Dish
+import dataComponents.FuckingSerializer
+
 
 class StatisticsRepository {
     private var revenue: Int = 0
@@ -31,6 +33,20 @@ class StatisticsRepository {
     fun addPaidOrder() {
         countOfPaidOrders++
     }
+
+    fun serialiseList() {
+        val stats = mutableListOf(revenue, countOfUsers, countOfOrders, countOfPaidOrders)
+        FuckingSerializer("no").serializeListToFile(stats, "lolStas.json")
+    }
+
+    fun deserializeList() {
+        val stats = FuckingSerializer("no").deserializeListFromFile<Int>("lolStas.json")
+        revenue = stats[0]
+        countOfUsers = stats[1]
+        countOfOrders = stats[2]
+        countOfPaidOrders = stats[3]
+    }
+
 
     fun rateDish(dish: Dish, score: Int, text: String) {
         dish.rating.addReview(score, text)

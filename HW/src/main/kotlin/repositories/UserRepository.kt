@@ -1,5 +1,6 @@
 package repositories
 
+import dataComponents.FuckingSerializer
 import dataComponents.User
 import java.nio.file.AccessDeniedException
 
@@ -11,10 +12,7 @@ class UserRepository(private var path: String = "users.json") {
     }
 
     private fun deserializeUsers(pathToFile: String): MutableList<User> {
-        return mutableListOf(
-            User("user", 1, false),
-            User("admin", 2, true)
-        )
+        return FuckingSerializer("a").deserializeListFromFile<User>("fuckingUsers.json").toMutableList()
     }
 
     fun addUser(newUser: User) {
@@ -42,5 +40,9 @@ class UserRepository(private var path: String = "users.json") {
 
     fun countUsers() : Int {
         return users.size
+    }
+
+    fun serialiseUsers() {
+        FuckingSerializer("f").serializeListToFile(users, "fuckingUsers.json")
     }
 }

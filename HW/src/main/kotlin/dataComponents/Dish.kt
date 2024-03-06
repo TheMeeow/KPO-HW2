@@ -1,11 +1,14 @@
 package dataComponents
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class Dish(val name: String,
            var price: Int,
            private var cookingTime: Int,
            var rating: DishRating) {
 
-    fun getPrice(): Int {
+    fun getPriceT(): Int {
        return price
     }
 
