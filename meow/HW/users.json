@@ -1,0 +1,12 @@
+[
+    {
+        "username": "string",
+        "passwordHash": -891985903,
+        "isAdmin": true
+    },
+    {
+        "username": "user",
+        "passwordHash": -891985903,
+        "isAdmin": false
+    }
+]

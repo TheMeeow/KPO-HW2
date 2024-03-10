@@ -1,0 +1,47 @@
+[
+    {
+        "name": "water",
+        "price": 2,
+        "cookingTime": 2,
+        "rating": {
+            "listOfReviews": [
+                "Wow, it's really water!   | RATE = 5"
+            ],
+            "rating": 5
+        }
+    },
+    {
+        "name": "rise",
+        "price": 5,
+        "cookingTime": 10,
+        "rating": {
+            "listOfReviews": [
+                "Good dish   | RATE = 4",
+                "Dont like it   | RATE = 3"
+            ],
+            "rating": 3.5
+        }
+    },
+    {
+        "name": "draniki",
+        "price": 15,
+        "cookingTime": 30,
+        "rating": {
+            "listOfReviews": [
+                "Really cool!!   | RATE = 5"
+            ],
+            "rating": 5.0
+        }
+    },
+    {
+        "name": "something",
+        "price": 10,
+        "cookingTime": 40,
+        "rating": {
+            "listOfReviews": [
+                "Not tasty(   | RATE = 2"
+            ],
+            "rating": 2.0
+        }
+    }
+]
